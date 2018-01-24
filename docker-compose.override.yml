@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  mondosurf_mvc.5:
+    ports:
+      - "80"
+networks:
+  default:
+    external:
+      name: nat

@@ -1,0 +1,58 @@
+﻿@model MondoSurf_MVC._5.Models.Spot_Details
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Spot_Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Spot_Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Spot_Name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.County_id)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.County_id)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Coordinates)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Coordinates)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Street_Address)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Street_Address)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Spot_Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

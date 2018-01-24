@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MondoSurf_MVC._5.Models.Spot_Forecast>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeStampGMT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Size_ft)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shape_Full)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shape_Detail_Swell)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shape_Detail_Tide)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shape_Detail_Wind)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Warning)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Spot_Details.Spot_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStampGMT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size_ft)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shape_Full)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shape_Detail_Swell)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shape_Detail_Tide)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shape_Detail_Wind)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Warning)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Spot_Details.Spot_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MondoSurfDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Errors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="LogTimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="Url" Type="varchar" MaxLength="100" />
+          <Property Name="ErrorMessage" Type="varchar(max)" />
+          <Property Name="StackTrace" Type="varchar(max)" />
+          <Property Name="SupplementalInformation" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Spot_Details">
+          <Key>
+            <PropertyRef Name="Spot_Id" />
+          </Key>
+          <Property Name="Spot_Id" Type="int" Nullable="false" />
+          <Property Name="Spot_Name" Type="varchar" MaxLength="50" />
+          <Property Name="County_id" Type="int" />
+          <Property Name="Longitude" Type="float" />
+          <Property Name="Latitude" Type="float" />
+          <Property Name="Street_Address" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Spot_Forecast">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Spot_Id" Type="int" Nullable="false" />
+          <Property Name="TimeStampGMT" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Size_ft" Type="float" />
+          <Property Name="Shape_Full" Type="varchar" MaxLength="50" />
+          <Property Name="Shape_Detail_Swell" Type="varchar" MaxLength="50" />
+          <Property Name="Shape_Detail_Tide" Type="varchar" MaxLength="50" />
+          <Property Name="Shape_Detail_Wind" Type="varchar" MaxLength="50" />
+          <Property Name="Warning" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Spot_Forecast_Spot_Details">
+          <End Role="Spot_Details" Type="Self.Spot_Details" Multiplicity="1" />
+          <End Role="Spot_Forecast" Type="Self.Spot_Forecast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spot_Details">
+              <PropertyRef Name="Spot_Id" />
+            </Principal>
+            <Dependent Role="Spot_Forecast">
+              <PropertyRef Name="Spot_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MondoSurfDBModelStoreContainer">
+          <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spot_Details" EntityType="Self.Spot_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spot_Forecast" EntityType="Self.Spot_Forecast" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Spot_Forecast_Spot_Details" Association="Self.FK_Spot_Forecast_Spot_Details">
+            <End Role="Spot_Details" EntitySet="Spot_Details" />
+            <End Role="Spot_Forecast" EntitySet="Spot_Forecast" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MondoSurfDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Spot_Details">
+          <Key>
+            <PropertyRef Name="Spot_Id" />
+          </Key>
+          <Property Name="Spot_Id" Type="Int32" Nullable="false" />
+          <Property Name="Spot_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="County_id" Type="Int32" />
+          <Property Name="Street_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Spot_Forecast" Relationship="Self.FK_Spot_Forecast_Spot_Details" FromRole="Spot_Details" ToRole="Spot_Forecast" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="Latitude" Type="Double" />
+        </EntityType>
+        <EntityType Name="Spot_Forecast">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Spot_Id" Type="Int32" Nullable="false" />
+          <Property Name="TimeStampGMT" Type="DateTimeOffset" Nullable="false" />
+          <Property Name="Size_ft" Type="Double" />
+          <Property Name="Shape_Full" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Shape_Detail_Swell" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Shape_Detail_Tide" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Shape_Detail_Wind" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Warning" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Spot_Details" Relationship="Self.FK_Spot_Forecast_Spot_Details" FromRole="Spot_Forecast" ToRole="Spot_Details" />
+        </EntityType>
+        <Association Name="FK_Spot_Forecast_Spot_Details">
+          <End Role="Spot_Details" Type="Self.Spot_Details" Multiplicity="1" />
+          <End Role="Spot_Forecast" Type="Self.Spot_Forecast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spot_Details">
+              <PropertyRef Name="Spot_Id" />
+            </Principal>
+            <Dependent Role="Spot_Forecast">
+              <PropertyRef Name="Spot_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MondoSurfDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Spot_Details" EntityType="Self.Spot_Details" />
+          <EntitySet Name="Spot_Forecast" EntityType="Self.Spot_Forecast" />
+          <AssociationSet Name="FK_Spot_Forecast_Spot_Details" Association="Self.FK_Spot_Forecast_Spot_Details">
+            <End Role="Spot_Details" EntitySet="Spot_Details" />
+            <End Role="Spot_Forecast" EntitySet="Spot_Forecast" />
+          </AssociationSet>
+          <EntitySet Name="Errors" EntityType="MondoSurfDBModel.Error" />
+        </EntityContainer>
+        <EntityType Name="Error">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="LogTimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SupplementalInformation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MondoSurfDBModelStoreContainer" CdmEntityContainer="MondoSurfDBEntities2">
+          <EntitySetMapping Name="Spot_Details">
+            <EntityTypeMapping TypeName="MondoSurfDBModel.Spot_Details">
+              <MappingFragment StoreEntitySet="Spot_Details">
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Spot_Id" ColumnName="Spot_Id" />
+                <ScalarProperty Name="Spot_Name" ColumnName="Spot_Name" />
+                <ScalarProperty Name="County_id" ColumnName="County_id" />
+                <ScalarProperty Name="Street_Address" ColumnName="Street_Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spot_Forecast">
+            <EntityTypeMapping TypeName="MondoSurfDBModel.Spot_Forecast">
+              <MappingFragment StoreEntitySet="Spot_Forecast">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Spot_Id" ColumnName="Spot_Id" />
+                <ScalarProperty Name="TimeStampGMT" ColumnName="TimeStampGMT" />
+                <ScalarProperty Name="Size_ft" ColumnName="Size_ft" />
+                <ScalarProperty Name="Shape_Full" ColumnName="Shape_Full" />
+                <ScalarProperty Name="Shape_Detail_Swell" ColumnName="Shape_Detail_Swell" />
+                <ScalarProperty Name="Shape_Detail_Tide" ColumnName="Shape_Detail_Tide" />
+                <ScalarProperty Name="Shape_Detail_Wind" ColumnName="Shape_Detail_Wind" />
+                <ScalarProperty Name="Warning" ColumnName="Warning" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Errors">
+            <EntityTypeMapping TypeName="MondoSurfDBModel.Error">
+              <MappingFragment StoreEntitySet="Errors">
+                <ScalarProperty Name="SupplementalInformation" ColumnName="SupplementalInformation" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="LogTimeStamp" ColumnName="LogTimeStamp" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

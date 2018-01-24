@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  mondosurf_mvc.5:
+    image: mondosurf_mvc.5
+    build:
+      context: .\MondoSurf_MVC.5
+      dockerfile: Dockerfile

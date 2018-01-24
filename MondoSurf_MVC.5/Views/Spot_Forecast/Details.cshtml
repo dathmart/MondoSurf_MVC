@@ -1,0 +1,82 @@
+﻿@model MondoSurf_MVC._5.Models.Spot_Forecast
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Spot_Forecast</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeStampGMT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeStampGMT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Size_ft)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Size_ft)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Shape_Full)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Shape_Full)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Shape_Detail_Swell)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Shape_Detail_Swell)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Shape_Detail_Tide)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Shape_Detail_Tide)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Shape_Detail_Wind)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Shape_Detail_Wind)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Warning)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Warning)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Spot_Details.Spot_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Spot_Details.Spot_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

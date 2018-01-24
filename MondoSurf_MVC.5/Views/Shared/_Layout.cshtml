@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <!-- ==================================
+         ======= mCustomScrollbar =========
+         ================================== -->
+    <div class="body-content">
+        <div class="wrapper">
+            <nav id="sidebar">
+                <!-- Sidebar header -->
+                <div class="sidebar-header">
+                    <h3>@Html.ActionLink("Mondo Surf", "Index", "Home")</h3>
+                </div>
+                <!--Sidebar links-->
+                <ul class="list-unstyled components">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>
+                        <!--Dropdown items-->
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Surf Lore</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li><a href="#">Hawaii</a></li>
+                            <li><a href="#">Indonesia</a></li>
+                            <li><a href="#">Jakarta</a></li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Developers", "")</li>    
+                </ul>
+                @Html.Partial("_LoginPartial")
+
+            </nav>
+        </div>
+        <!-- ==== End mCustomScrollbar ==== -->
+        <!-- Toggle Sidebar -->
+        <div id="content">
+            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                <i class="glyphicon glyphicon-align-left"></i>
+            </button>
+        </div>
+
+        @RenderBody()
+        <hr />
+    </div>
+    <footer class="panel-footer">
+        <p>&copy; @DateTime.Now.Year MondoSurf</p>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery/mcustomscrollbar")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/d3")
+    @RenderSection("scripts", required: false)
+    @RenderSection("IndexScripts", required: false)
+    <script type="text/javascript">
+            if (typeof jQuery == 'undefined') {
+                var e = document.createElement('script');
+                e.src = '@Url.Content("~/Scripts/jquery.mCustomScrollbar.concat.min.js")';
+                e.type = 'text/javascript';
+                document.getElementsByTagName("head")[0].appendChild(e);
+
+            }
+
+            (function ($) {
+                $(window).on("load", function () {
+                    $(".content").mCustomScrollbar();
+                });
+            })(jQuery);
+
+            $(document).ready(function () {
+
+                // Scrolling sidebar brains
+                $('#sidebar').mCustomScrollbar({
+                    theme: "minimal",
+                    scrollButtons: {
+                        enable: true
+                    }
+                });
+
+                $('#sidebarCollapse').click(() => {
+                    // open sidebar
+                    $('#sidebar').toggleClass('active');
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+
+                });
+
+                $('#dismiss').click(() => {
+                    // hide the sidebar
+                    $('#sidebar').removeClass('active');
+                });
+
+            });
+
+    </script>
+
+</body>
+</html>

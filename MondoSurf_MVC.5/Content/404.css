@@ -1,0 +1,8 @@
+﻿body {
+    display: flex;
+    background: linear-gradient("steelblue" 0%, "lightsteelblue" 50%, "aqua" 51%, "green" 100%);
+}
+
+.body-content {
+
+}
