@@ -5,7 +5,7 @@
 }
 
 
-<div id="forecastDiv" class="container" style="background-color:#EEEEEE;">
+<div id="forecastDiv" style="background-color:#EEEEEE;">
     <p id="forecastTitle" class="jumbotron">Mondo Surf Forecast</p>
     <button type="button" id="toggleChart">&raquo;</button>
     <div id="forecastGraph"></div>
@@ -27,7 +27,7 @@
         ];
 
         $(document).ready(function () {
-            
+
             // create and populate forecast table
             (function renderTable() {
 
@@ -79,10 +79,10 @@
                ========= ====      ====   ===========
                ====================================
             */
-            // ======== Basics ==========================
+            // ==========================================
             // ==========================================
             // set the dimensions and margins of the graph
-            var margin = {top: 15, right: 20, bottom: 30, left: 50},
+            var margin = { top: 15, right: 20, bottom: 30, left: 50 },
                 width = 760 - margin.left - margin.right,
                 height = 300 - margin.top - margin.bottom,
             // parse the date / time
@@ -90,18 +90,19 @@
             // set the ranges
                 x = d3.scaleTime().range([0, width]),
                 y = d3.scaleLinear().range([height, 0]),
-            // define the line(s)
+            // define the line(s) // **.curve(d3.curveBasis) transforms line to curve
                 hourLine = d3.line()
-                .x(d => { return x(d.hour); })
-                .y(d => { return y(d.size_ft); })
-                .curve(d3.curveBasis);
-
+                    .x(d => { return x(d.hour); })
+                    .y(d => { return y(d.size_ft); })
+                    .curve(d3.curveBasis),
             // define the area
-            var area = d3.area()
-                .x(d => { return x(d.hour); })
-                .y0(height)
-                .y1(d => { return y(d.size_ft); })
-                .curve(d3.curveBasis);
+                area = d3.area()
+                    .x(d => { return x(d.hour); })
+                    .y0(height)
+                    .y1(d => { return y(d.size_ft); })
+                    .curve(d3.curveBasis);
+
+
 
             // append the svg object to the body of the page
             // appends'g' to 'svg' ( 'g', i.e., 'group element' )
@@ -111,7 +112,12 @@
                 .attr("height", height + margin.top + margin.bottom)
               .append("g")
                 .attr("transform",
-                      "translate(" + margin.left + "," + margin.top + ")");
+                "translate(" + margin.left + "," + margin.top + ")");
+
+            function make_xGridlines() {
+                return d3.axisBottom(x)
+                    .ticks(24)
+            }
 
             (function draw(data) {
 
@@ -121,9 +127,10 @@
                 data.forEach(d => {
                     d.hour = parseTime(d.hour);
                     d.size_ft = +d.size_ft;
-                });
 
-                var sorter = {
+                });
+                // alias days of the week to numbers
+                var days = {
                     "sun": 0,
                     "mon": 1,
                     "tue": 2,
@@ -133,11 +140,13 @@
                     "sat": 6,
 
                 };
+                // sort days of the week
                 data.sort(function sortByDay(a, b) {
                     var day1 = a.day.toLowerCase(),
                         day2 = b.day.toLowerCase();
-                    return sorter[day1] > sorter[day2];
+                    return days[day1] > days[day2];
                 });
+
 
 
                 // sort hours ascending
@@ -150,19 +159,23 @@
                     return d.hour;
                 }));
                 y.domain([0, d3.max(data, d => {
-                    return Math.round(Math.max(d.size_ft) + 3);
+                    return Math.round(Math.max(d.size_ft)*1.25);
                 })]);
 
-                // Add valueline path.
-                //svg.append("path")
-                //    .data([data])
-                //    .attr("class", "line")
-                //    .attr("d", valueline);
+                // Add gridlines
+                svg.append("g")
+                    .attr("class", "grid")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(make_xGridlines()
+                        .tickSize(-height)
+                        .tickFormat(""))
+
+                // Add fill for area under curve(hourLine)
                 svg.append("path")
-                    .datum(data)
+                    .data([data])
                     .attr("class", "area")
                     .attr("d", area);
-                // Add valueline2 path.
+                // Add hourLine
                 svg.append("path")
                     .data([data])
                     .attr("class", "line")
@@ -170,7 +183,8 @@
                 // Add X axis
                 svg.append("g")
                     .attr("transform", "translate(0," + height + ")")
-                    .call(d3.axisBottom(x));
+                    .call(d3.axisBottom(x)
+                        .ticks(24));
 
                 // Add Y axis
                 svg.append("g")
@@ -193,3 +207,39 @@
 
 }
 
+<style>
+    /* d3 area */
+    .area {
+        fill: lightsteelblue;
+        stroke-width: 0;
+    }
+
+    .axis line {
+        shape-rendering: crispEdges;
+    }
+
+    .focus circle {
+        fill: none;
+        stroke: black;
+    }
+
+    .grid line {
+        stroke: lightgrey;
+        stroke-opacity: 0.7;
+        shape-rendering: crispEdges;
+    }
+    .grid path {
+        stroke-width: 0;
+    }
+    /* d3 line */
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 2px;
+    }
+
+    .overlay {
+        fill: none;
+        pointer-events: all;
+    }
+</style>

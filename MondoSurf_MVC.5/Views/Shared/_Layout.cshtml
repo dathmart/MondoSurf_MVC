@@ -7,6 +7,9 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet/less" href="~/Content/less/gradients.less" />
+
 </head>
 <body>
     <!-- ==================================
@@ -25,15 +28,15 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>
                         <!--Dropdown items-->
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Surf Lore</a>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Surf Lore<i class="fa fa-angle-double-down"></i></a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li><a href="#">Hawaii</a></li>
-                            <li><a href="#">Indonesia</a></li>
-                            <li><a href="#">Jakarta</a></li>
+                            <li><a href="#">Polynesia</a></li>
+                            <li><a href="#">Tahiti</a></li>
                         </ul>
                     </li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Developers", "")</li>    
+                    <li>@Html.ActionLink("Developers", "D")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
 
@@ -43,13 +46,23 @@
         <!-- Toggle Sidebar -->
         <div id="content">
             <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-align-left"></i>
+                <i class="fa fa-align-left"></i>
             </button>
         </div>
 
         @RenderBody()
         <hr />
+
     </div>
+
+    <div id="videoHeader">
+        <h1><span>In the news...</span></h1>
+    </div>
+
+    <div class="videoWrapper">
+        @Html.Partial("_SurfVidsPartial")
+    </div>
+
     <footer class="panel-footer">
         <p>&copy; @DateTime.Now.Year MondoSurf</p>
     </footer>

@@ -8,6 +8,9 @@ namespace MondoSurf_MVC._5
     {
         public void Configuration(IAppBuilder app)
         {
+            // the terrible hack
+            var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+
             ConfigureAuth(app);
         }
     }

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+    @*<div id="player"></div>*@
+    <iframe id="youtubePlayer" type="text/html" width="640" height="390"
+                src="https://www.youtube.com/embed/M0xj2GIP9t4?enablejsapi=1&origin=http://localhost:59621/autoplay=1"
+                frameborder="0" allowfullscreen>
+            Jinkies, gang, there should be an iframe here...this sure is a groovy mystery
+        </iframe>
+
+    <script type="text/javascript">
+
+
+        var tag = document.createElement('script');
+        tag.id = 'YT-iframe';
+        tag.src = 'https://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+        function onPlayerReady(event) {
+            document.getElementById('youtubePlayer').style.borderColor = '#FF6D00';
+        }
+        function changeBorderColor(playerStatus) {
+            var color;
+            if (playerStatus == -1) {
+                color = "#37474F"; // unstarted = gray
+            } else if (playerStatus == 0) {
+                color = "#FFFF00"; // ended = yellow
+            } else if (playerStatus == 1) {
+                color = "#33691E"; // playing = green
+            } else if (playerStatus == 2) {
+                color = "#DD2C00"; // paused = red
+            } else if (playerStatus == 3) {
+                color = "#AA00FF"; // buffering = purple
+            } else if (playerStatus == 5) {
+                color = "#FF6DOO"; // video cued = orange
+            }
+            if (color) {
+                document.getElementById('youtubePlayer').style.borderColor = color;
+            }
+        }
+        function onPlayerStateChange(event) {
+            changeBorderColor(event.data);
+        }
+
+      /*             /                 =======                 \
+                    /                ===========                \
+                   /              //=============\\              \
+                  |             //=================\\             |
+                  |=============(=== Darsh Vader ===))============|
+                  |              \\================//             |
+                   \               \\============//              /
+                    \                ============               /
+                     \                 =======                 /
+        */
+
+
+
+    </script>
+</body>
+
+</html>

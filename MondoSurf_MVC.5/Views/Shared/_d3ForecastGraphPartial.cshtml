@@ -1,0 +1,149 @@
+﻿<style>
+    /* d3 area */
+    .area {
+        fill: lightsteelblue;
+        stroke-width: 0;
+    }
+
+    .axis line {
+        shape-rendering: crispEdges;
+    }
+
+    .focus circle {
+        fill: none;
+        stroke: black;
+    }
+    /* d3 line */
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 2px;
+    }
+
+    .overlay {
+        fill: none;
+        pointer-events: all
+    }
+</style>
+
+<script>
+
+    /* ====================================
+       ========== ====      ====   ===========
+       ========== =    \   =    =  =============
+       ========== =    ||     ==   ==============
+       ========== =    /   =    =  =============
+       ========== ====      ====   ===========
+       =====================================
+   *///==========================================
+    // ==========================================
+    
+    // Draw graph
+    (function draw(data, yVar1) {
+
+    // set the dimensions and margins of the graph
+    var margin = { top: 15, right: 20, bottom: 30, left: 50 },
+        width = 760 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom,
+        // parse the date / time
+        parseTime = d3.timeParse("%I%p"),
+        // set the ranges
+        x = d3.scaleTime().range([0, width]),
+        y = d3.scaleLinear().range([height, 0]),
+        // define the line(s)
+        yVar1Line = d3.line()
+            .x(d => { return x(d.hour); })
+            .y(d => { return y(d.yVar1); })
+            .curve(d3.curveBasis);
+
+    // define the area
+    var area = d3.area()
+        .x(d => { return x(d.hour); })
+        .y0(height)
+        .y1(d => { return y(d.yVar1); })
+        .curve(d3.curveBasis);
+
+    // append the svg object to the body of the page
+    // appends'g' to 'svg' ( 'g', i.e., 'group element' )
+    // moves 'g' to the top left margin
+    var svg = d3.select("#forecastGraph").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+        var data = data[0];
+
+        // format the data
+        data.forEach(d => {
+            d.hour = parseTime(d.hour);
+            d.yVar1 = +d.yVar1;
+        });
+
+        var sorter = {
+            "sun": 0,
+            "mon": 1,
+            "tue": 2,
+            "wed": 3,
+            "thu": 4,
+            "fri": 5,
+            "sat": 6,
+
+        };
+        data.sort(function sortByDay(a, b) {
+            var day1 = a.day.toLowerCase(),
+                day2 = b.day.toLowerCase();
+            return sorter[day1] > sorter[day2];
+        });
+
+
+        // sort hours ascending
+        data.sort((a, b) => {
+            return a["hour"] - b["hour"];
+        });
+
+        // Scale the range of the data
+        x.domain(d3.extent(data, d => {
+            return d.hour;
+        }));
+        y.domain([0, d3.max(data, d => {
+            return Math.round(Math.max(d.yVar1)*1.25);
+        })]);
+
+        // Add valueline path.
+        //svg.append("path")
+        //    .data([data])
+        //    .attr("class", "line")
+        //    .attr("d", valueline);
+        svg.append("path")
+            .datum(data)
+            .attr("class", "area")
+            .attr("d", area);
+        // Add yVar1Line path.
+        svg.append("path")
+            .data([data])
+            .attr("class", "line")
+            .attr("d", yVar1Line);
+        // Add X axis
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x)
+                .ticks(24));
+
+        // Add Y axis
+        svg.append("g")
+            .call(d3.axisLeft(y));
+        // Text label for Y axis
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Wave height(ft)");
+
+    })(surfData, size_ft); //draw graph with surf data
+
+
+</script>

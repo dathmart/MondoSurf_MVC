@@ -90,11 +90,22 @@ namespace MondoSurf_MVC._5.Controllers
 
         public ActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Contact";
 
             return View();
         }
+        public ActionResult SurfLore()
+        {
+            ViewData["Message"] = "Surf Lore";
 
+            return View();
+        }
+        public ActionResult SurfRadar()
+        {
+            ViewData["Message"] = "Surf Radar";
+
+            return View();
+        }
 
     }
 }
