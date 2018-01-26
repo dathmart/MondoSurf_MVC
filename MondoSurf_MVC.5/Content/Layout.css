@@ -31,16 +31,16 @@ h1 span {
 /* Scrolling sidebar */
 
 a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
-    content: "";
+    content: "\f103";
     display: block;
     position: absolute;
     right: 20px;
-    font-family: 'Glyphicons Halflings';
+    font-family: FontAwesome;
     font-size: 0.6em;
 }
 
 a[aria-expanded="true"]::before {
-    content: "\e260";
+    content: "\f100";
 }
 
 a[data-toggle="collapse"] {
@@ -59,11 +59,11 @@ a, a:hover, a:focus {
 }
 
 #dismiss {
-    width: 50px;
+    width: 25px;
     height: 50px;
     position: absolute;
-    top: 10px;
-    right: 95px;
+    top: 22px;
+    right: 0px;
 }
 
 #sidebar {

@@ -18,6 +18,9 @@
     <div class="body-content">
         <div class="wrapper">
             <nav id="sidebar">
+                <div id="dismiss">
+                    <i class="fa fa-arrow-left"></i>
+                </div>
                 <!-- Sidebar header -->
                 <div class="sidebar-header">
                     <h3>@Html.ActionLink("Mondo Surf", "Index", "Home")</h3>
@@ -28,7 +31,7 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>
                         <!--Dropdown items-->
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Surf Lore<i class="fa fa-angle-double-down"></i></a>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Surf Lore</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li><a href="#">Hawaii</a></li>
                             <li><a href="#">Polynesia</a></li>
@@ -41,6 +44,7 @@
                 @Html.Partial("_LoginPartial")
 
             </nav>
+            <div class="overlay"></div>
         </div>
         <!-- ==== End mCustomScrollbar ==== -->
         <!-- Toggle Sidebar -->

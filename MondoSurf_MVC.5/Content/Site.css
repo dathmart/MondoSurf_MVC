@@ -1,6 +1,6 @@
 ﻿body {
-    padding-top: 25px;
-    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     /*background-color: mintcream;*/
 }
 
@@ -9,7 +9,7 @@
 .body-content {
     display: flex;
     padding-left: 0;
-    padding-right: 15px;
+    padding-right: 10px;
 }
 
 /* Carousel */
